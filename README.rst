@@ -4,7 +4,7 @@ PHP Selenium library
 Selenium is a tool for web test automation. This library is a client of the
 Selenium Server for PHP.
 
-It provides a fluid interface with PHPDoc inside :
+It provides a fluid interface with autocompletion and documentation in modern IDEs.
 
 ::
 
