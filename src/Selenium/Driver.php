@@ -154,7 +154,8 @@ class Driver
             throw new Exception("Session not started");
         }
 
-        $response = $this->doExecute('testComplete');
+        $this->doExecute('testComplete');
+        $this->sessionId = null;
     }
 
     protected function doExecute($command, $target = null, $value = null)
