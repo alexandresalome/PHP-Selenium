@@ -86,11 +86,11 @@ class Driver
     {
         $result = $this->doExecute($command, $target, $value);
 
-        if (!preg_match('/^OK,(.*)/', $result, $vars)) {
+        if (!preg_match('/^OK,/', $result)) {
             throw new Exception("Unexpected response from Selenium server : ".$result);
         }
 
-        return $vars[1];
+        return substr($result, 3);
     }
 
     public function getStringArray($command, $target = null, $value = null)
