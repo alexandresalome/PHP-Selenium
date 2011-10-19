@@ -30,6 +30,8 @@ class Client
      */
     protected $timeout;
 
+    protected $browserClass = 'Selenium\Browser';
+
     /**
      * Instanciates the client.
      *
@@ -45,6 +47,16 @@ class Client
     }
 
     /**
+     * Changes the class used for instanciation of browser.
+     *
+     * @var string $browserClass The browser class to use
+     */
+    public function setBrowserClass($browserClass)
+    {
+        $this->browserClass = $browserClass;
+    }
+
+    /**
      * Creates a new browser instance.
      *
      * @param string $startPage The URL of the website to test
@@ -54,9 +66,11 @@ class Client
      */
     public function getBrowser($startPage, $type = '*firefox')
     {
-        $url = 'http://'.$this->host.':'.$this->port.'/selenium-server/driver/';
+        $url    = 'http://'.$this->host.':'.$this->port.'/selenium-server/driver/';
         $driver = new Driver($url, $this->timeout);
 
-        return new Browser($driver, $startPage, $type);
+        $class  = $this->browserClass;
+
+        return new $class($driver, $startPage, $type);
     }
 }
