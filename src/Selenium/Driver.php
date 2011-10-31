@@ -66,9 +66,9 @@ class Driver
     /**
      * Executes an action
      *
-     * @param string $command Command to run
-     * @param string $target  Target
-     * @param string $value   Value
+     * @param string $command Command to execute
+     * @param string $target  First parameter
+     * @param string $value   Second parameter
      *
      * @return void
      */
@@ -82,6 +82,15 @@ class Driver
 
     }
 
+    /**
+     * Executes a command on the server and returns a string.
+     *
+     * @param string $command The command to execute
+     * @param string $target  First parameter
+     * @param string $value   Second parameter
+     *
+     * @return string The result of the command as a string
+     */
     public function getString($command, $target = null, $value = null)
     {
         $result = $this->doExecute($command, $target, $value);
@@ -93,6 +102,15 @@ class Driver
         return substr($result, 3);
     }
 
+    /**
+     * Executes a command on the server and returns an array of string.
+     *
+     * @param string $command Command to execute
+     * @param string $target  First parameter
+     * @param string $value   Second parameter
+     *
+     * @return array The result of the command as an array of string
+     */
     public function getStringArray($command, $target = null, $value = null)
     {
         $string = $this->getString($command, $target, $value);
@@ -129,6 +147,15 @@ class Driver
         return $result;
     }
 
+    /**
+     * Executes a command on the server and returns a number.
+     *
+     * @param string $command The command to execute
+     * @param string $target  First parameter
+     * @param string $value   Second parameter
+     *
+     * @return int The result of the command as a number
+     */
     public function getNumber($command, $target = null, $value = null)
     {
         $string = $this->getString($command, $target, $value);
@@ -136,6 +163,15 @@ class Driver
         return (int) $string;
     }
 
+    /**
+     * Executes a command on the server and returns a boolean.
+     *
+     * @param string $command The command to execute
+     * @param string $target  First parameter
+     * @param string $value   Second parameter
+     *
+     * @return boolean The result of the command as a boolean
+     */
     public function getBoolean($command, $target = null, $value = null)
     {
         $string = $this->getString($command, $target, $value);
@@ -158,6 +194,16 @@ class Driver
         $this->sessionId = null;
     }
 
+    /**
+     * Executes a raw command on the server and integrate the current session
+     * identifier if available.
+     *
+     * @param string $command Command to execute
+     * @param string $target  First argument
+     * @param string $value   Second argument
+     *
+     * @return string The raw result of the command
+     */
     protected function doExecute($command, $target = null, $value = null)
     {
         $query = array('cmd' => $command);
