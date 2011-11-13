@@ -128,4 +128,41 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Client::DEFAULT_TIMEOUT, $buzzClient->getTimeout());
         $this->assertEquals(0, $buzzClient->getMaxRedirects());
     }
+
+    /**
+     * Tests the error handling of the client.
+     */
+    public function testVerifyResponse()
+    {
+        $buzzClient = new LoggedFIFO();
+        $client = new Client('http://localhost', $buzzClient);
+
+        // Test the standard error
+        $request  = new Request();
+        $response = new Response();
+        $response->addHeader('1.0 400 Bad Request');
+        $response->setContent(json_encode(array('status' => 123, 'value' => array('message' => 'Message'))));
+        $buzzClient->sendToQueue($response);
+
+        try {
+            $client->process($request, $response);
+            $this->fail();
+        } catch (\RuntimeException $e) {
+            $this->assertEquals('Error 123: Message', $e->getMessage());
+        }
+
+        // Test the unparsable error
+        $request  = new Request();
+        $response = new Response();
+        $response->addHeader('1.0 500 Internal Error');
+        $response->setContent('Unparsable');
+        $buzzClient->sendToQueue($response);
+
+        try {
+            $client->process($request, $response);
+            $this->fail();
+        } catch (\RuntimeException $e) {
+            $this->assertEquals('Unparsable', $e->getMessage());
+        }
+    }
 }

@@ -136,6 +136,33 @@ class Client
         $newRequest = clone $request;
         $newRequest->fromUrl($url);
 
-        $this->client->send($newRequest, $response);
+        $newResponse = new Response();
+
+        $this->client->send($newRequest, $newResponse);
+
+        $this->verifyResponse($newResponse);
+
+        $response->setHeaders($newResponse->getHeaders());
+        $response->setContent($newResponse->getContent());
+    }
+
+    /**
+     * Verifies every response received from the server to make sure no error
+     * happened during processing.
+     *
+     * @param Buzz\Message\Response A response object to verify
+     */
+    protected function verifyResponse(Response $response)
+    {
+        $statusCode = $response->getStatusCode();
+        if ($statusCode === 200 || ($statusCode >= 300 && $statusCode <= 303)) {
+            return;
+        }
+
+        $errorResponse = new Message\ErrorResponse();
+        $errorResponse->setHeaders($response->getHeaders());
+        $errorResponse->setContent($response->getContent());
+
+        throw $errorResponse->getException();
     }
 }
