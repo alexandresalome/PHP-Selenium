@@ -68,7 +68,7 @@ class Client
      *
      * @return Selenium\Session The instanciated session ready to be used
      */
-    public function getSession(Capabilities $capabilities)
+    public function createSession(Capabilities $capabilities)
     {
         $request  = new Message\SessionCreateRequest($capabilities);
         $response = new Message\SessionCreateResponse();

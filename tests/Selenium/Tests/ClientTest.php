@@ -26,7 +26,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     /**
      * Verify the actual call to the server for creating a session
      */
-    public function testSession()
+    public function testCreateSession()
     {
         $buzzClient = new FIFO();
         $client = new Client('http://localhost', $buzzClient);
@@ -36,7 +36,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $response->addHeader('Location: http://localhost/session/12345');
         $buzzClient->sendToQueue($response);
 
-        $session = $client->getSession(new Capabilities('firefox'));
+        $session = $client->createSession(new Capabilities('firefox'));
 
         $this->assertEquals(0, count($buzzClient->getQueue()), "Queue is empty");
 
