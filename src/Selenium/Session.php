@@ -45,6 +45,15 @@ class Session
     }
 
     /**
+     * Closes the session and disable this session.
+     */
+    public function close()
+    {
+        $this->client->closeSession($this->sessionId);
+        $this->sessionId = null;
+    }
+
+    /**
      * Returns the current session ID.
      *
      * @return string
