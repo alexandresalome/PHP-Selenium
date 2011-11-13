@@ -71,6 +71,23 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verify session close
+     */
+    public function testCloseSession()
+    {
+        $buzzClient = new FIFO();
+        $client = new Client('http://localhost', $buzzClient);
+
+        $response = new Response();
+        $response->addHeader('1.0 200 OK');
+        $buzzClient->sendToQueue($response);
+
+        $session = $client->closeSession('12345');
+
+        $this->assertEquals(0, count($buzzClient->getQueue()));
+    }
+
+    /**
      * Verify the prefix is inserted in request
      */
     public function testPrefix()

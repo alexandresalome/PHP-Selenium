@@ -108,6 +108,21 @@ class Client
     }
 
     /**
+     * Closes a session according to his ID.
+     *
+     * @param string $sessionId A session ID
+     */
+    public function closeSession($sessionId)
+    {
+        $request = new Message\SessionCloseRequest($sessionId);
+        $response = new Response();
+
+        $this->process($request, $response);
+
+        unset($this->sessions[$sessionId]);
+    }
+
+    /**
      * Plumber method to request the server, using the base URL.
      *
      * @param Buzz\Message\Request $request The request to send
