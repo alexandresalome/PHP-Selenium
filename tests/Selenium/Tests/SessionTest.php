@@ -9,7 +9,11 @@
 
 namespace Selenium\Tests;
 
+use Buzz\Client\Mock\FIFO;
+use Buzz\Message\Response;
+
 use Selenium\Session;
+use Selenium\Client;
 
 /**
  * Tests for the session object.
@@ -18,23 +22,16 @@ use Selenium\Session;
  */
 class SessionTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Mock client for creating sessions
-     *
-     * @var Selenium\Client
-     */
     protected $client;
+    protected $buzzClient;
 
     /**
      * @inheritdoc
      */
     public function setUp()
     {
-        $this->client = $this->getMock('Selenium\Client', array(
-            'closeSession'
-        ), array(
-           'http://localhost'
-        ));
+        $this->buzzClient = new FIFO();
+        $this->client     = new Client('http://localhost', $this->buzzClient);
     }
 
     /**
@@ -52,16 +49,51 @@ class SessionTest extends \PHPUnit_Framework_TestCase
      */
     public function testClose()
     {
-        $this->client
-            ->expects($this->once())
-            ->method('closeSession')
-            ->with($this->equalTo('12345'))
-        ;
+        $this->buzzClient->sendToQueue(new Response());
 
         $session = new Session('12345', $this->client);
 
         $session->close();
 
-        $this->assertNull($session->getSessionId());
+        try {
+            $session->getSessionId();
+            $this->fail();
+        } catch (\RuntimeException $e) {
+            $this->assertEquals('This session was closed', $e->getMessage());
+        }
+    }
+
+    /**
+     * Tests the open method of the session
+     */
+    public function testOpen()
+    {
+        $response = new Response();
+        $this->buzzClient->sendToQueue($response);
+
+        $session = new Session('12345', $this->client);
+
+        $session = $session->open('http://google.fr');
+
+        $this->assertInstanceOf('Selenium\Session', $session);
+        $this->assertEquals(0, count($this->buzzClient->getQueue()));
+    }
+
+    /**
+     * Tests the getUrl method of the session
+     */
+    public function testGetUrl()
+    {
+        $response = new Response();
+        $response->addHeader('1.0 200 OK');
+        $response->setContent(json_encode(array('value' => 'http://google.fr')));
+        $this->buzzClient->sendToQueue($response);
+
+        $session = new Session('12345', $this->client);
+
+        $url = $session->getUrl();
+
+        $this->assertEquals('http://google.fr', $url);
+        $this->assertEquals(0, count($this->buzzClient->getQueue()));
     }
 }

@@ -9,6 +9,8 @@
 
 namespace Selenium;
 
+use Buzz\Message\Response;
+
 /**
  * WebDriver Session
  *
@@ -49,7 +51,7 @@ class Session
      */
     public function close()
     {
-        $this->client->closeSession($this->sessionId);
+        $this->client->closeSession($this->getSessionId());
         $this->sessionId = null;
     }
 
@@ -60,6 +62,44 @@ class Session
      */
     public function getSessionId()
     {
+        if (null === $this->sessionId) {
+            throw new \RuntimeException('This session was closed');
+        }
+
         return $this->sessionId;
+    }
+
+    /**
+     * Returns the current session URL.
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        $request  = new Message\UrlGetRequest($this->getSessionId());
+        $response = new Message\UrlGetResponse();
+
+        $this->client->process($request, $response);
+
+        return $response->getUrl();
+    }
+
+    /**
+     * Open a URL. The function will wait for page to load before returning the
+     * value. If any redirection occurs, it will follow them before returning
+     * a value.
+     *
+     * @param string $url A URL to access
+     *
+     * @return Selenium\Session fluid interface
+     */
+    public function open($url)
+    {
+        $request  = new Message\UrlSetRequest($this->getSessionId(), $url);
+        $response = new Response();
+
+        $this->client->process($request, $response);
+
+        return $this;
     }
 }
