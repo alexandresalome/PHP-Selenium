@@ -132,7 +132,10 @@ class Client
     public function process(Request $request, Response $response)
     {
         $url = $this->url.$request->getResource();
-        $request->fromUrl($url);
-        $this->client->send($request, $response);
+
+        $newRequest = clone $request;
+        $newRequest->fromUrl($url);
+
+        $this->client->send($newRequest, $response);
     }
 }

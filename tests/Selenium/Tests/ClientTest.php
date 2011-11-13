@@ -9,10 +9,10 @@
 
 namespace Selenium\Tests;
 
-use Buzz\Client\Mock\FIFO;
 use Buzz\Message\Request;
 use Buzz\Message\Response;
 
+use Selenium\Test\Buzz\Client\LoggedFIFO;
 use Selenium\Capabilities;
 use Selenium\Client;
 
@@ -28,7 +28,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateSession()
     {
-        $buzzClient = new FIFO();
+        $buzzClient = new LoggedFIFO();
         $client = new Client('http://localhost', $buzzClient);
 
         $response = new Response();
@@ -40,6 +40,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, count($buzzClient->getQueue()), "Queue is empty");
 
+        $this->assertInstanceOf('Selenium\Message\SessionCreateRequest', $buzzClient->getLastRequest());
+
         $this->assertEquals('12345', $session->getSessionId());
     }
 
@@ -48,7 +50,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSession()
     {
-        $buzzClient = new FIFO();
+        $buzzClient = new LoggedFIFO();
         $client = new Client('http://localhost', $buzzClient);
 
         $response = new Response();
@@ -75,7 +77,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testCloseSession()
     {
-        $buzzClient = new FIFO();
+        $buzzClient = new LoggedFIFO();
         $client = new Client('http://localhost', $buzzClient);
 
         $response = new Response();
@@ -84,6 +86,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $session = $client->closeSession('12345');
 
+        $this->assertInstanceOf('Selenium\Message\SessionCloseRequest', $buzzClient->getLastRequest());
         $this->assertEquals(0, count($buzzClient->getQueue()));
     }
 
@@ -92,7 +95,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testPrefix()
     {
-        $buzzClient = new FIFO();
+        $buzzClient = new LoggedFIFO();
         $buzzClient->sendToQueue(new Response());
 
         $client = new Client('http://localhost/prefix', $buzzClient);
@@ -103,6 +106,6 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $client->process($request, $response);
 
-        $this->assertEquals('/prefix/session', $request->getResource());
+        $this->assertEquals('/prefix/session', $buzzClient->getLastRequest()->getResource());
     }
 }
