@@ -49,7 +49,9 @@ class SessionTest extends \PHPUnit_Framework_TestCase
      */
     public function testClose()
     {
-        $this->buzzClient->sendToQueue(new Response());
+        $response = new Response();
+        $response->addHeader('1.0 200 OK');
+        $this->buzzClient->sendToQueue($response);
 
         $session = new Session('12345', $this->client);
 
@@ -69,6 +71,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     public function testOpen()
     {
         $response = new Response();
+        $response->addHeader('1.0 200 OK');
         $this->buzzClient->sendToQueue($response);
 
         $session = new Session('12345', $this->client);

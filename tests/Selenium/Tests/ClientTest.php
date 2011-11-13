@@ -96,7 +96,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testPrefix()
     {
         $buzzClient = new LoggedFIFO();
-        $buzzClient->sendToQueue(new Response());
+
+        $response = new Response();
+        $response->addHeader('1.0 200 OK');
+        $buzzClient->sendToQueue($response);
 
         $client = new Client('http://localhost/prefix', $buzzClient);
 
