@@ -108,4 +108,21 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('/prefix/session', $buzzClient->getLastRequest()->getResource());
     }
+
+    /**
+     * Tests the default instanciated client for Selenium.
+     */
+    public function testDefaultClient()
+    {
+        $client = new Client('http://localhost/prefix');
+
+        $object = new \ReflectionObject($client);
+        $property = $object->getProperty('client');
+        $property->setAccessible(true);
+        $buzzClient = $property->getValue($client);
+
+        $this->assertInstanceOf('Buzz\Client\Curl', $buzzClient);
+        $this->assertEquals(Client::DEFAULT_TIMEOUT, $buzzClient->getTimeout());
+        $this->assertEquals(0, $buzzClient->getMaxRedirects());
+    }
 }
