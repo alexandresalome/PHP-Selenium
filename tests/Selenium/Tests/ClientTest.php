@@ -44,6 +44,33 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verify it's possible to fetch an existing session
+     */
+    public function testGetSession()
+    {
+        $buzzClient = new FIFO();
+        $client = new Client('http://localhost', $buzzClient);
+
+        $response = new Response();
+        $response->addHeader('1.0 302 Moved Temporarly');
+        $response->addHeader('Location: http://localhost/session/12345');
+        $buzzClient->sendToQueue($response);
+
+        $session = $client->createSession(new Capabilities('firefox'));
+
+        $this->assertEquals('12345', $session->getSessionId());
+        $this->assertEquals($session, $client->getSession('12345'));
+
+        try
+        {
+            $client->getSession('54321');
+            $this->fail();
+        } catch (\RuntimeException $e) {
+            $this->assertEquals('The session "54321" was not found', $e->getMessage());
+        }
+    }
+
+    /**
      * Verify the prefix is inserted in request
      */
     public function testPrefix()

@@ -41,6 +41,13 @@ class Client
     protected $client;
 
     /**
+     * Associative array containing all existing sessions
+     *
+     * @var array
+     */
+    protected $sessions;
+
+    /**
      * Constructs the client.
      *
      * @param string $url The base URL for WebDriver server
@@ -75,7 +82,29 @@ class Client
 
         $this->process($request, $response);
 
-        return new Session($response->getSessionId(), $this);
+        $sessionId = $response->getSessionId();
+
+        return $this->sessions[$sessionId] = new Session($sessionId, $this);
+    }
+
+    /**
+     * Returns a session according to his ID. To get it, it must first have
+     * been created.
+     *
+     * @param string $sessionId The session ID to fetch
+     *
+     * @return Selenium\Session The session associated
+     *
+     * @throws RuntimeException An exception is thrown if the session does not
+     * exists.
+     */
+    public function getSession($sessionId)
+    {
+        if (!isset($this->sessions[$sessionId])) {
+            throw new \RuntimeException(sprintf('The session "%s" was not found', $sessionId));
+        }
+
+        return $this->sessions[$sessionId];
     }
 
     /**
