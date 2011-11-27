@@ -14,7 +14,7 @@ $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
 $loader->registerNamespaces(array(
     'Symfony'  => __DIR__.'/vendor',
     'Buzz'     => __DIR__.'/vendor/buzz/lib',
-    'Selenium' => array(__DIR__.'/src', __DIR__.'/tests')
+    'Selenium' => array(__DIR__.'/src', __DIR__.'/tests', __DIR__.'/samples/website/tests')
 ));
 
 $loader->register();
