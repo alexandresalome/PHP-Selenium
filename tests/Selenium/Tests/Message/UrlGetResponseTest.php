@@ -30,20 +30,4 @@ class UrlGetResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('http://google.fr', $response->getUrl());
     }
-
-    /**
-     * Tests the error case
-     */
-    public function testError()
-    {
-        $response = new UrlGetResponse();
-        $response->addHeader('1.0 500 Internal Error');
-
-        try {
-            $response->getUrl();
-            $this->fail();
-        } catch (\RuntimeException $e) {
-            $this->assertEquals('The response code should be 200, response code from server was "500"', $e->getMessage());
-        }
-    }
 }

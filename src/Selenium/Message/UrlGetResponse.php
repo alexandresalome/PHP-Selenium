@@ -25,11 +25,6 @@ class UrlGetResponse extends Response
      */
     public function getUrl()
     {
-        $statusCode = $this->getStatusCode();
-        if ($statusCode !== 200) {
-            throw new \RuntimeException(sprintf('The response code should be 200, response code from server was "%s"', $statusCode));
-        }
-
         $content = str_replace("\0", "", $this->getContent());
         $content = json_decode($content, true);
 

@@ -33,17 +33,17 @@ class SessionCreateResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Verify handling of 500 errors
+     * Verify handling of incorrect code
      */
-    public function testInternalError()
+    public function testIncorrectCode()
     {
         try {
             $response = new SessionCreateResponse();
-            $response->addHeader('1.0 500 Internal Error');
+            $response->addHeader('1.0 200 OK');
 
             $response->getSessionId();
         } catch (\RuntimeException $e) {
-            $this->assertEquals('The response should be a redirection, response code from server was "500"', $e->getMessage());
+            $this->assertEquals('The response should be a redirection, response code from server was "200"', $e->getMessage());
         }
     }
 

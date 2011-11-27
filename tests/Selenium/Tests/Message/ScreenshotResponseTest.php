@@ -30,20 +30,4 @@ class ScreenshotResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('foo', $response->getScreenshotData());
     }
-
-    /**
-     * Tests the error case
-     */
-    public function testError()
-    {
-        $response = new ScreenshotResponse();
-        $response->addHeader('1.0 500 Internal Error');
-
-        try {
-            $response->getScreenshotData();
-            $this->fail();
-        } catch (\RuntimeException $e) {
-            $this->assertEquals('The response code should be 200, response code from server was "500"', $e->getMessage());
-        }
-    }
 }
