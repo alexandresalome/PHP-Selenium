@@ -155,7 +155,7 @@ class Client
     protected function verifyResponse(Response $response)
     {
         $statusCode = $response->getStatusCode();
-        if ($statusCode === 200 || ($statusCode >= 300 && $statusCode <= 303)) {
+        if ($statusCode === 200 || $statusCode === 204 || ($statusCode >= 300 && $statusCode <= 303)) {
             return;
         }
 
