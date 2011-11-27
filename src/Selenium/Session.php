@@ -102,4 +102,19 @@ class Session
 
         return $this;
     }
+
+    /**
+     * Captures a screenshot of the page, PNG format.
+     *
+     * @return string The PNG file content
+     */
+    public function screenshot()
+    {
+        $request = new Message\ScreenshotRequest($this->getSessionId());
+        $response = new Message\ScreenshotResponse();
+
+        $this->client->process($request, $response);
+
+        return $response->getScreenshotData();
+    }
 }

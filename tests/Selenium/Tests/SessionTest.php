@@ -99,4 +99,19 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('http://google.fr', $url);
         $this->assertEquals(0, count($this->buzzClient->getQueue()));
     }
+
+    public function testScreenshot()
+    {
+        $response = new Response();
+        $response->addHeader('1.0 200 OK');
+        $response->setContent(json_encode(array('value' => base64_encode('foo'))));
+        $this->buzzClient->sendToQueue($response);
+
+        $session = new Session('12345', $this->client);
+
+        $data = $session->screenshot();
+
+        $this->assertEquals('foo', $data);
+        $this->assertEquals(0, count($this->buzzClient->getQueue()));
+    }
 }
