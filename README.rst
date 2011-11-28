@@ -14,6 +14,7 @@ Opening/Closing a session
 :::::::::::::::::::::::::
 
 ::
+
     <?php
     // Create a new client
     $client  = new Selenium\Client('http://localhost:4444/wd/hub');
@@ -28,6 +29,7 @@ Session features
 ::::::::::::::::
 
 ::
+
     <?php
 
     // Get the source of the page
@@ -41,6 +43,7 @@ Navigation features
 :::::::::::::::::::
 
 ::
+
     <?php
 
     // Open an URL
