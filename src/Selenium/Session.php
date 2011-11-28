@@ -111,6 +111,21 @@ class Session
     }
 
     /**
+     * Requests the source code of the current page.
+     *
+     * @return string The source code of the current page
+     */
+    public function getSource()
+    {
+        $request  = new Message\Session\SourceRequest($this->getSessionId());
+        $response = new Message\Session\SourceResponse();
+
+        $this->client->process($request, $response);
+
+        return $response->getSource();
+    }
+
+    /**
      * Requests the title of the current page.
      *
      * @return string The page title

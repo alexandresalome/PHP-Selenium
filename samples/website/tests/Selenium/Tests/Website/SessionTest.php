@@ -49,4 +49,16 @@ class SessionTest extends SeleniumTestCase
 
         $this->assertEquals('Sample website', $session->getTitle());
     }
+
+    public function testGetSource()
+    {
+        $session = $this->getSession();
+        $session->navigation()->open($this->getUrl('index.php'));
+
+        $source = $session->getSource();
+        $this->assertContains('This comment is only viewable with source code', $source);
+        $this->assertContains('<!DOCTYPE html>', $source);
+        $this->assertContains('<head>', $source);
+        $this->assertContains('<body>', $source);
+    }
 }

@@ -24,6 +24,18 @@ Opening/Closing a session
     // Close a session
     $session->close();
 
+Session features
+::::::::::::::::
+
+::
+    <?php
+
+    // Get the source of the page
+    $source = $session->getSource();
+
+    // Screenshot (returns PNG data)
+    $png = $session->screenshot();
+
 
 Navigation features
 :::::::::::::::::::
