@@ -26,17 +26,8 @@ class NavigationTest extends SeleniumTestCase
         $url = $this->getUrl('index.php');
 
         $session = $this->getSession();
-        $session->open($url);
+        $session->navigation()->open($url);
 
-        $this->assertEquals($url, $session->getUrl());
-    }
-
-    public function testTitle()
-    {
-        $session = $this->getSession();
-        $session->open($this->getUrl('index.php'));
-
-        var_dump($session->getTitle());
-        $this->assertEquals('Sample website', $session->getTitle());
+        $this->assertEquals($url, $session->navigation()->getUrl());
     }
 }

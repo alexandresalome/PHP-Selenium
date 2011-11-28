@@ -9,8 +9,6 @@
 
 namespace Selenium;
 
-use Buzz\Message\Response;
-
 /**
  * WebDriver Session
  *
@@ -33,6 +31,13 @@ class Session
     protected $client;
 
     /**
+     * The navigation manager
+     *
+     * @var Selenium\Navigation
+     */
+    protected $navigation;
+
+    /**
      * Instanciates the object.
      *
      * @param string $sessionId The session ID
@@ -40,10 +45,11 @@ class Session
      * @param Selenium\Client $client The client to use for exchanges with the
      * server
      */
-    public function __construct($sessionId, Client $client)
+    public function __construct(Client $client, $sessionId)
     {
-        $this->sessionId = $sessionId;
-        $this->client    = $client;
+        $this->client     = $client;
+        $this->sessionId  = $sessionId;
+        $this->navigation = new Navigation($this);
     }
 
     /**
@@ -70,37 +76,23 @@ class Session
     }
 
     /**
-     * Returns the current session URL.
-     *
-     * @return string
+     * Returns the client associated to the
+     * @return type
      */
-    public function getUrl()
+    public function getClient()
     {
-        $request  = new Message\UrlGetRequest($this->getSessionId());
-        $response = new Message\UrlGetResponse();
-
-        $this->client->process($request, $response);
-
-        return $response->getUrl();
+        return $this->client;
     }
 
     /**
-     * Open a URL. The function will wait for page to load before returning the
-     * value. If any redirection occurs, it will follow them before returning
-     * a value.
+     * Returns the navigation manager. Provides functionalities for navigating
+     * like opening URLs, gettin URLs, refreshing page, history features, etc.
      *
-     * @param string $url A URL to access
-     *
-     * @return Selenium\Session fluid interface
+     * @return Selenium\Navigation
      */
-    public function open($url)
+    public function navigation()
     {
-        $request  = new Message\UrlSetRequest($this->getSessionId(), $url);
-        $response = new Response();
-
-        $this->client->process($request, $response);
-
-        return $this;
+        return $this->navigation;
     }
 
     /**
@@ -110,8 +102,8 @@ class Session
      */
     public function screenshot()
     {
-        $request = new Message\ScreenshotRequest($this->getSessionId());
-        $response = new Message\ScreenshotResponse();
+        $request  = new Message\Session\ScreenshotRequest($this->getSessionId());
+        $response = new Message\Session\ScreenshotResponse();
 
         $this->client->process($request, $response);
 
@@ -125,8 +117,8 @@ class Session
      */
     public function getTitle()
     {
-        $request = new Message\TitleRequest($this->getSessionId());
-        $response = new Message\TitleResponse();
+        $request  = new Message\Session\TitleRequest($this->getSessionId());
+        $response = new Message\Session\TitleResponse();
 
         $this->client->process($request, $response);
 

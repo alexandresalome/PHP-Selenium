@@ -16,8 +16,8 @@ require_once __DIR__.'/../autoload.php';
 $client  = new Selenium\Client('http://localhost:4444/wd/hub');
 $session = $client->createSession(new Selenium\Capabilities('firefox'));
 
-$session->open('http://www.google.fr');
+$session->navigation()->open('http://www.google.fr');
 
-echo sprintf("The current URL is: %s\n", $session->getUrl());
+echo sprintf("The current URL is: %s\n", $session->navigation()->getUrl());
 
 $session->close();

@@ -8,9 +8,9 @@
  */
 
 
-namespace Selenium\Tests\Message;
+namespace Selenium\Tests\Message\Session;
 
-use Selenium\Message\ScreenshotResponse;
+use Selenium\Message\Session\ScreenshotResponse;
 
 /**
  * Tests the response object for screenshot

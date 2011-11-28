@@ -8,25 +8,29 @@
  */
 
 
-namespace Selenium\Tests\Message;
+namespace Selenium\Tests\Message\Navigation;
 
-use Selenium\Message\UrlGetRequest;
+use Selenium\Message\Navigation\UrlSetRequest;
 
 /**
- * Tests the request object for getting URL
+ * Tests the request object for setting URL
  *
  * @author Alexandre Salomé <alexandre.salome@gmail.com>
  */
-class UrlGetRequestTest extends \PHPUnit_Framework_TestCase
+class UrlSetRequestTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests the basic case
      */
     public function testSimple()
     {
-        $request = new UrlGetRequest('12345');
+        $request = new UrlSetRequest('12345', 'http://google.fr');
 
+        $data = $request->getContent();
+        $data = json_decode($data, true);
+
+        $this->assertEquals('POST', $request->getMethod());
         $this->assertEquals('/session/12345/url', $request->getResource());
-        $this->assertEquals('GET', $request->getMethod());
+        $this->assertEquals(array('url' => 'http://google.fr'), $data);
     }
 }

@@ -7,16 +7,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Selenium\Message;
+namespace Selenium\Message\Navigation;
 
 use Buzz\Message\Request;
 
 /**
- * Request for getting the current title of the page
+ * Request for getting the current URL of the page
  *
  * @author Alexandre Salomé <alexandre.salome@gmail.com>
  */
-class TitleRequest extends Request
+class UrlGetRequest extends Request
 {
     /**
      * Constructs the request object
@@ -25,6 +25,6 @@ class TitleRequest extends Request
      */
     public function __construct($sessionId)
     {
-        parent::__construct(Request::METHOD_GET, sprintf('/session/%s/title', $sessionId));
+        parent::__construct(Request::METHOD_GET, sprintf('/session/%s/url', $sessionId));
     }
 }

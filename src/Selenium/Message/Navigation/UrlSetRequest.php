@@ -7,24 +7,28 @@
  * file that was distributed with this source code.
  */
 
-namespace Selenium\Message;
+namespace Selenium\Message\Navigation;
 
 use Buzz\Message\Request;
 
 /**
- * Request for getting the current URL of the page
+ * Request for setting the current URL of the page
  *
  * @author Alexandre Salomé <alexandre.salome@gmail.com>
  */
-class UrlGetRequest extends Request
+class UrlSetRequest extends Request
 {
     /**
      * Constructs the request object
      *
      * @param string $sessionId A session ID
+     *
+     * @param string $url A URL to set
      */
-    public function __construct($sessionId)
+    public function __construct($sessionId, $url)
     {
-        parent::__construct(Request::METHOD_GET, sprintf('/session/%s/url', $sessionId));
+        parent::__construct(Request::METHOD_POST, sprintf('/session/%s/url', $sessionId));
+
+        $this->setContent(json_encode(array('url' => $url)));
     }
 }

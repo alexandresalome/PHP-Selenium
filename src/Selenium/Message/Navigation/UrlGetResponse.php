@@ -7,23 +7,23 @@
  * file that was distributed with this source code.
  */
 
-namespace Selenium\Message;
+namespace Selenium\Message\Navigation;
 
 use Buzz\Message\Response;
 
 /**
- * Response message of title request.
+ * Response message of url getter.
  *
  * @author Alexandre Salomé <alexandre.salome@gmail.com>
  */
-class TitleResponse extends Response
+class UrlGetResponse extends Response
 {
     /**
-     * Returns the title.
+     * Returns the session ID of the created session.
      *
-     * @return string A page title
+     * @return string A session ID
      */
-    public function getTitle()
+    public function getUrl()
     {
         $content = str_replace("\0", "", $this->getContent());
         $content = json_decode($content, true);

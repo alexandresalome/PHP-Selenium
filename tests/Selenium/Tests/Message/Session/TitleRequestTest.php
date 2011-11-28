@@ -8,25 +8,25 @@
  */
 
 
-namespace Selenium\Tests\Message;
+namespace Selenium\Tests\Message\Session;
 
-use Selenium\Message\ScreenshotRequest;
+use Selenium\Message\Session\TitleRequest;
 
 /**
- * Tests the request object for screenshot
+ * Tests the request object for getting title
  *
  * @author Alexandre Salomé <alexandre.salome@gmail.com>
  */
-class ScreenshotRequestTest extends \PHPUnit_Framework_TestCase
+class TitleRequestTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests the basic case
      */
     public function testSimple()
     {
-        $request = new ScreenshotRequest('12345');
+        $request = new TitleRequest('12345');
 
-        $this->assertEquals('/session/12345/screenshot', $request->getResource());
+        $this->assertEquals('/session/12345/title', $request->getResource());
         $this->assertEquals('GET', $request->getMethod());
     }
 }

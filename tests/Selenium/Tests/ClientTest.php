@@ -40,7 +40,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, count($buzzClient->getQueue()), "Queue is empty");
 
-        $this->assertInstanceOf('Selenium\Message\SessionCreateRequest', $buzzClient->getLastRequest());
+        $this->assertInstanceOf('Selenium\Message\Client\SessionCreateRequest', $buzzClient->getLastRequest());
 
         $this->assertEquals('12345', $session->getSessionId());
     }
@@ -86,7 +86,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $session = $client->closeSession('12345');
 
-        $this->assertInstanceOf('Selenium\Message\SessionCloseRequest', $buzzClient->getLastRequest());
+        $this->assertInstanceOf('Selenium\Message\Client\SessionCloseRequest', $buzzClient->getLastRequest());
         $this->assertEquals(0, count($buzzClient->getQueue()));
     }
 

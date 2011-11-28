@@ -77,14 +77,14 @@ class Client
      */
     public function createSession(Capabilities $capabilities)
     {
-        $request  = new Message\SessionCreateRequest($capabilities);
-        $response = new Message\SessionCreateResponse();
+        $request  = new Message\Client\SessionCreateRequest($capabilities);
+        $response = new Message\Client\SessionCreateResponse();
 
         $this->process($request, $response);
 
         $sessionId = $response->getSessionId();
 
-        return $this->sessions[$sessionId] = new Session($sessionId, $this);
+        return $this->sessions[$sessionId] = new Session($this, $sessionId);
     }
 
     /**
@@ -114,7 +114,7 @@ class Client
      */
     public function closeSession($sessionId)
     {
-        $request = new Message\SessionCloseRequest($sessionId);
+        $request = new Message\Client\SessionCloseRequest($sessionId);
         $response = new Response();
 
         $this->process($request, $response);

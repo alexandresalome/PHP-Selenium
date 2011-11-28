@@ -8,25 +8,25 @@
  */
 
 
-namespace Selenium\Tests\Message;
+namespace Selenium\Tests\Message\Navigation;
 
-use Selenium\Message\TitleRequest;
+use Selenium\Message\Navigation\UrlGetRequest;
 
 /**
- * Tests the request object for getting title
+ * Tests the request object for getting URL
  *
  * @author Alexandre Salomé <alexandre.salome@gmail.com>
  */
-class TitleRequestTest extends \PHPUnit_Framework_TestCase
+class UrlGetRequestTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests the basic case
      */
     public function testSimple()
     {
-        $request = new TitleRequest('12345');
+        $request = new UrlGetRequest('12345');
 
-        $this->assertEquals('/session/12345/title', $request->getResource());
+        $this->assertEquals('/session/12345/url', $request->getResource());
         $this->assertEquals('GET', $request->getMethod());
     }
 }

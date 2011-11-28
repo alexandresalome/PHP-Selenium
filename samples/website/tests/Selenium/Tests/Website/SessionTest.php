@@ -12,23 +12,23 @@ namespace Selenium\Tests\Website;
 use Selenium\Test\SeleniumTestCase;
 
 /**
- * Verify the screenshot feature.
+ * Verify the session features.
  *
  * @author Alexandre Salomé <alexandre.salome@gmail.com>
  */
-class ScreenshotTest extends SeleniumTestCase
+class SessionTest extends SeleniumTestCase
 {
     /**
      * Screenshots the page and make sure we have an image.
      */
-    public function testBasic()
+    public function testScreenshot()
     {
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not installed');
         }
 
         $session = $this->getSession();
-        $session->open($this->getUrl('index.php'));
+        $session->navigation()->open($this->getUrl('index.php'));
 
         $data = $session->screenshot();
 
@@ -37,5 +37,16 @@ class ScreenshotTest extends SeleniumTestCase
 
         $this->assertGreaterThan(100, $image->getImageWidth());
         $this->assertGreaterThan(100, $image->getImageHeight());
+    }
+
+    /**
+     * Test title getter
+     */
+    public function testTitle()
+    {
+        $session = $this->getSession();
+        $session->navigation()->open($this->getUrl('index.php'));
+
+        $this->assertEquals('Sample website', $session->getTitle());
     }
 }

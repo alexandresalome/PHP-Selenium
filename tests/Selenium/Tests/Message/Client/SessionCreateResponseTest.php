@@ -7,11 +7,10 @@
  * file that was distributed with this source code.
  */
 
-
-namespace Selenium\Tests\Message;
+namespace Selenium\Tests\Message\Client;
 
 use Selenium\Capabilities;
-use Selenium\Message\SessionCreateResponse;
+use Selenium\Message\Client\SessionCreateResponse;
 
 /**
  * Tests the response object for session creation.

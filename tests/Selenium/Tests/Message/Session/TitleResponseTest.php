@@ -8,26 +8,26 @@
  */
 
 
-namespace Selenium\Tests\Message;
+namespace Selenium\Tests\Message\Session;
 
-use Selenium\Message\UrlGetResponse;
+use Selenium\Message\Session\TitleResponse;
 
 /**
- * Tests the response object for getting URL
+ * Tests the response object for getting title
  *
  * @author Alexandre Salomé <alexandre.salome@gmail.com>
  */
-class UrlGetResponseTest extends \PHPUnit_Framework_TestCase
+class TitleResponseTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests the basic case
      */
     public function testSimple()
     {
-        $response = new UrlGetResponse();
+        $response = new TitleResponse();
         $response->addHeader('1.0 200 OK');
-        $response->setContent(json_encode(array('value' => 'http://google.fr')));
+        $response->setContent(json_encode(array('value' => "foo")));
 
-        $this->assertEquals('http://google.fr', $response->getUrl());
+        $this->assertEquals('foo', $response->getTitle());
     }
 }

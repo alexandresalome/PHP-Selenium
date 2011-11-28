@@ -18,7 +18,7 @@ $target = __DIR__.'/screenshot.png';
 $client  = new Selenium\Client('http://localhost:4444/wd/hub');
 $session = $client->createSession(new Selenium\Capabilities('firefox'));
 
-$session->open('http://google.fr');
+$session->navigation()->open('http://google.fr');
 
 file_put_contents($target, $session->screenshot());
 

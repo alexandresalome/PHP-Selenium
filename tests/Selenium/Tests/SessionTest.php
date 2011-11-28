@@ -32,6 +32,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $this->buzzClient = new FIFO();
         $this->client     = new Client('http://localhost', $this->buzzClient);
+        $this->session    = new Session($this->client, '12345');
     }
 
     /**
@@ -39,9 +40,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSessionId()
     {
-        $session = new Session('12345', $this->client);
 
-        $this->assertEquals('12345', $session->getSessionId());
+        $this->assertEquals('12345', $this->session->getSessionId());
     }
 
     /**
@@ -53,51 +53,14 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $response->addHeader('1.0 200 OK');
         $this->buzzClient->sendToQueue($response);
 
-        $session = new Session('12345', $this->client);
-
-        $session->close();
+        $this->session->close();
 
         try {
-            $session->getSessionId();
+            $this->session->getSessionId();
             $this->fail();
         } catch (\RuntimeException $e) {
             $this->assertEquals('This session was closed', $e->getMessage());
         }
-    }
-
-    /**
-     * Tests the open method of the session
-     */
-    public function testOpen()
-    {
-        $response = new Response();
-        $response->addHeader('1.0 200 OK');
-        $this->buzzClient->sendToQueue($response);
-
-        $session = new Session('12345', $this->client);
-
-        $session = $session->open('http://google.fr');
-
-        $this->assertInstanceOf('Selenium\Session', $session);
-        $this->assertEquals(0, count($this->buzzClient->getQueue()));
-    }
-
-    /**
-     * Tests the getUrl method of the session
-     */
-    public function testGetUrl()
-    {
-        $response = new Response();
-        $response->addHeader('1.0 200 OK');
-        $response->setContent(json_encode(array('value' => 'http://google.fr')));
-        $this->buzzClient->sendToQueue($response);
-
-        $session = new Session('12345', $this->client);
-
-        $url = $session->getUrl();
-
-        $this->assertEquals('http://google.fr', $url);
-        $this->assertEquals(0, count($this->buzzClient->getQueue()));
     }
 
     public function testScreenshot()
@@ -107,9 +70,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $response->setContent(json_encode(array('value' => base64_encode('foo'))));
         $this->buzzClient->sendToQueue($response);
 
-        $session = new Session('12345', $this->client);
-
-        $data = $session->screenshot();
+        $data = $this->session->screenshot();
 
         $this->assertEquals('foo', $data);
         $this->assertEquals(0, count($this->buzzClient->getQueue()));
@@ -122,11 +83,16 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $response->setContent(json_encode(array('value' => "foo")));
         $this->buzzClient->sendToQueue($response);
 
-        $session = new Session('12345', $this->client);
-
-        $data = $session->getTitle();
+        $data = $this->session->getTitle();
 
         $this->assertEquals('foo', $data);
         $this->assertEquals(0, count($this->buzzClient->getQueue()));
+    }
+
+    public function testNavigation()
+    {
+        $navigation = $this->session->navigation();
+
+        $this->assertInstanceOf('Selenium\Navigation', $navigation);
     }
 }
