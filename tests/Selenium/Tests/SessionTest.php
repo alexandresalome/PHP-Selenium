@@ -114,4 +114,19 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $data);
         $this->assertEquals(0, count($this->buzzClient->getQueue()));
     }
+
+    public function testGetTitle()
+    {
+        $response = new Response();
+        $response->addHeader('1.0 200 OK');
+        $response->setContent(json_encode(array('value' => "foo")));
+        $this->buzzClient->sendToQueue($response);
+
+        $session = new Session('12345', $this->client);
+
+        $data = $session->getTitle();
+
+        $this->assertEquals('foo', $data);
+        $this->assertEquals(0, count($this->buzzClient->getQueue()));
+    }
 }

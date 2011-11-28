@@ -23,12 +23,20 @@ class NavigationTest extends SeleniumTestCase
      */
     public function testUrl()
     {
-        $session = $this->getSession();
-
         $url = $this->getUrl('index.php');
 
+        $session = $this->getSession();
         $session->open($url);
 
         $this->assertEquals($url, $session->getUrl());
+    }
+
+    public function testTitle()
+    {
+        $session = $this->getSession();
+        $session->open($this->getUrl('index.php'));
+
+        var_dump($session->getTitle());
+        $this->assertEquals('Sample website', $session->getTitle());
     }
 }

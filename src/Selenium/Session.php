@@ -117,4 +117,19 @@ class Session
 
         return $response->getScreenshotData();
     }
+
+    /**
+     * Requests the title of the current page.
+     *
+     * @return string The page title
+     */
+    public function getTitle()
+    {
+        $request = new Message\TitleRequest($this->getSessionId());
+        $response = new Message\TitleResponse();
+
+        $this->client->process($request, $response);
+
+        return $response->getTitle();
+    }
 }
