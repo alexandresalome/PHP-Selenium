@@ -1,5 +1,18 @@
 {
     "name": "alexandresalome/php-selenium",
-    "description": "PHP Library for Selenium"
-}
+    "description": "PHP Library for Selenium",
 
+    "authors": [
+        {
+            "name":      "Alexandre Salomé",
+            "email":     "alexandre.salome@gmail.com",
+            "homepage":  "http://alexandre-salome.fr/"
+        }
+    ],
+
+    "autoload": {
+        "psr-0": {
+            "Selenium": "src/"
+        }
+    }
+}
