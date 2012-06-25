@@ -2503,9 +2503,7 @@ class Browser extends BaseBrowser
      */
     public function captureScreenshotToString()
     {
-        $this->driver->action("captureScreenshotToString");
-        
-        return $this;
+        return $this->driver->getString("captureScreenshotToString");
     }
 
     /**
@@ -2527,9 +2525,7 @@ class Browser extends BaseBrowser
      */
     public function captureEntirePageScreenshotToString($kwargs)
     {
-        $this->driver->action("captureEntirePageScreenshotToString", $kwargs);
-        
-        return $this;
+        return $this->driver->getString("captureEntirePageScreenshotToString", $kwargs);
     }
 
     /**
