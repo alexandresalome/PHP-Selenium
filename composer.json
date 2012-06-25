@@ -12,6 +12,10 @@
         }
     ],
 
+    "require-dev": {
+        "symfony/dom-crawler": "dev-master"
+    },
+
     "autoload": {
         "psr-0": {
             "Selenium": "src/"

@@ -18,7 +18,7 @@ use Selenium\Specification\Loader\XmlLoader;
 use Selenium\Specification\Dumper\BrowserDumper;
 use Selenium\Specification\Specification;
 
-require_once __DIR__.'/../autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 // Check parameter
 if (!isset($argv[1]) || !file_exists($argv[1])) {

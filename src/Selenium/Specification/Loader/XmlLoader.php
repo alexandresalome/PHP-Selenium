@@ -74,7 +74,7 @@ class XmlLoader
 
         // Type
         $method->setType(
-            preg_match('/^(get|is)/', $name) ?
+            preg_match('/(^(get|is)|ToString$)/', $name) ?
             Method::TYPE_ACCESSOR :
             Method::TYPE_ACTION
         );

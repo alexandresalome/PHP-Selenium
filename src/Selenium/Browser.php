@@ -2499,13 +2499,11 @@ class Browser extends BaseBrowser
      * Capture a PNG screenshot.  It then returns the file as a base 64 encoded
      * string.
      * 
-     * @return Selenium\Browser Fluid interface
+     * @return string The base 64 encoded string of the screen shot (PNG file)
      */
     public function captureScreenshotToString()
     {
-        $this->driver->action("captureScreenshotToString");
-        
-        return $this;
+        return $this->driver->getString("captureScreenshotToString");
     }
 
     /**
@@ -2523,13 +2521,12 @@ class Browser extends BaseBrowser
      * to fail and a black background is exposed  (possibly obscuring black
      * text).
      * 
-     * @return Selenium\Browser Fluid interface
+     * @return string The base 64 encoded string of the page screenshot (PNG
+     * file)
      */
     public function captureEntirePageScreenshotToString($kwargs)
     {
-        $this->driver->action("captureEntirePageScreenshotToString", $kwargs);
-        
-        return $this;
+        return $this->driver->getString("captureEntirePageScreenshotToString", $kwargs);
     }
 
     /**

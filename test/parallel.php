@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-require_once __DIR__.'/../autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 $client  = new Selenium\Client('localhost', 4444);
 $browser = $client->getBrowser('http://alexandre-salome.fr');

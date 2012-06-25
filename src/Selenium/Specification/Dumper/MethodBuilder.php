@@ -111,7 +111,7 @@ class MethodBuilder
 
         if ($this->documentation) {
             $code .= '    /**'."\n";
-            $code .= '     * '.str_replace("\n", "\n     * ", wordwrap($text, 73))."\n";
+            $code .= '     * '.str_replace("\n", "\n     * ", wordwrap($this->documentation, 73))."\n";
             $code .= '     */'."\n";
         }
 
