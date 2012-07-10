@@ -16,6 +16,8 @@
         "symfony/dom-crawler": "dev-master"
     },
 
+    "minimum-stability": "dev",
+
     "autoload": {
         "psr-0": {
             "Selenium": "src/"
