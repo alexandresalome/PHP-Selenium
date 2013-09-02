@@ -144,7 +144,7 @@ class Driver
 
             if ($char === ',') {
                 $result[] = $current;
-                $curent = '';
+                $current = '';
 
                 continue;
             }
