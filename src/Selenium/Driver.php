@@ -106,7 +106,7 @@ class Driver
             throw new Exception("Unexpected response from Selenium server : ".$result);
         }
 
-        return substr($result, 3);
+        return strlen($result) > 3 ? substr($result, 3) : '';
     }
 
     /**
