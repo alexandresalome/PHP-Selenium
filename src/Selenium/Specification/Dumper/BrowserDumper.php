@@ -65,7 +65,7 @@ namespace Selenium;
  *
  * @author Alexandre Salomé <alexandre.salome@gmail.com>
  */
-class Browser extends BaseBrowser
+class GeneratedBrowser extends BaseBrowser
 {
 ';
 
