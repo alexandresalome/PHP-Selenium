@@ -108,7 +108,6 @@ class GeneratedBrowser extends BaseBrowser
 
         } else {
             $returnType = $method->getReturnType();
-            $documentation .= '@return '.$returnType.' '.$method->getReturnDescription();
 
             if ($returnType === 'boolean') {
                 $getMethod = 'getBoolean';
@@ -118,7 +117,14 @@ class GeneratedBrowser extends BaseBrowser
                 $getMethod = 'getStringArray';
             } elseif ($returnType === 'number') {
                 $getMethod = 'getNumber';
+                $returnType = 'integer';
+
+                if (0 === strpos($method->getReturnDescription(), 'of ')) {
+                    $returnType .= ' number';
+                }
             }
+
+            $documentation .= '@return '.$returnType.' '.$method->getReturnDescription();
 
             $body = 'return $this->driver->'.$getMethod.'("'.$method->getName().'"'.($signature ? ', '.$signature : '').');';
         }

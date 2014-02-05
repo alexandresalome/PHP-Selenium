@@ -1696,7 +1696,7 @@ class GeneratedBrowser extends BaseBrowser
      * Returns the number of pixels between "mousemove" events during
      * dragAndDrop commands (default=10).
      *
-     * @return number the number of pixels between "mousemove" events during
+     * @return integer the number of pixels between "mousemove" events during
      * dragAndDrop commands (default=10)
      */
     public function getMouseSpeed()
@@ -1840,8 +1840,8 @@ class GeneratedBrowser extends BaseBrowser
      * @param string $locator an <a href="#locators">element locator</a>
      * pointing to an element
      *
-     * @return number of relative index of the element to its parent (starting
-     * from 0)
+     * @return integer number of relative index of the element to its parent
+     * (starting from 0)
      */
     public function getElementIndex($locator)
     {
@@ -1873,7 +1873,7 @@ class GeneratedBrowser extends BaseBrowser
      * @param string $locator an <a href="#locators">element locator</a>
      * pointing to an element OR an element itself
      *
-     * @return number of pixels from the edge of the frame.
+     * @return integer number of pixels from the edge of the frame.
      */
     public function getElementPositionLeft($locator)
     {
@@ -1886,7 +1886,7 @@ class GeneratedBrowser extends BaseBrowser
      * @param string $locator an <a href="#locators">element locator</a>
      * pointing to an element OR an element itself
      *
-     * @return number of pixels from the edge of the frame.
+     * @return integer number of pixels from the edge of the frame.
      */
     public function getElementPositionTop($locator)
     {
@@ -1899,7 +1899,7 @@ class GeneratedBrowser extends BaseBrowser
      * @param string $locator an <a href="#locators">element locator</a>
      * pointing to an element
      *
-     * @return number width of an element in pixels
+     * @return integer width of an element in pixels
      */
     public function getElementWidth($locator)
     {
@@ -1912,7 +1912,7 @@ class GeneratedBrowser extends BaseBrowser
      * @param string $locator an <a href="#locators">element locator</a>
      * pointing to an element
      *
-     * @return number height of an element in pixels
+     * @return integer height of an element in pixels
      */
     public function getElementHeight($locator)
     {
@@ -1934,7 +1934,7 @@ class GeneratedBrowser extends BaseBrowser
      * @param string $locator an <a href="#locators">element locator</a>
      * pointing to an input element or textarea
      *
-     * @return number the numerical position of the cursor in the field
+     * @return integer the numerical position of the cursor in the field
      */
     public function getCursorPosition($locator)
     {
@@ -1965,7 +1965,7 @@ class GeneratedBrowser extends BaseBrowser
      * @param string $xpath the xpath expression to evaluate. do NOT wrap this
      * expression in a 'count()' function; we will do that for you.
      *
-     * @return number the number of nodes that match the specified xpath
+     * @return integer the number of nodes that match the specified xpath
      */
     public function getXpathCount($xpath)
     {
@@ -1980,7 +1980,7 @@ class GeneratedBrowser extends BaseBrowser
      * @param string $css the css selector to evaluate. do NOT wrap this
      * expression in a 'count()' function; we will do that for you.
      *
-     * @return number the number of nodes that match the specified css selector
+     * @return integer the number of nodes that match the specified css selector
      */
     public function getCssCount($css)
     {
