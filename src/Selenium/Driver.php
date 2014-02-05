@@ -38,7 +38,7 @@ class Driver
     protected $sessionId;
 
     /**
-     * Instanciates the driver.
+     * Instantiates the driver.
      *
      * @param string $url     The URL of the server
      * @param int    $timeout Timeout
