@@ -38,7 +38,7 @@ class Driver
     protected $sessionId;
 
     /**
-     * Instanciates the driver.
+     * Instantiates the driver.
      *
      * @param string $url     The URL of the server
      * @param int    $timeout Timeout
@@ -185,14 +185,15 @@ class Driver
      */
     protected function doExecute($command, $target = null, $value = null)
     {
+        $postFields = array();
         $query = array('cmd' => $command);
 
         if ($target !== null) {
-            $query[1] = $target;
+            $postFields[1] = $target;
         }
 
         if ($value !== null) {
-            $query[2] = $value;
+            $postFields[2] = $value;
         }
 
         if (null !== $this->sessionId) {
@@ -202,23 +203,20 @@ class Driver
         $query = http_build_query($query);
         $url = $this->url.'?'.$query;
 
-        $context = stream_context_create(array(
-            'http' => array('timeout' => $this->timeout)
-        ));
+        //open connection
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, count($postFields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postFields));
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        $fp = @fopen($url, 'r', false, $context);
+        $result = curl_exec($ch);
+        $curlErrno = curl_errno($ch);
+        curl_close($ch);
 
-        if (false === $fp) {
+        if ($curlErrno > 0) {
             throw new Exception("Unable to connect ! ");
         }
-
-        stream_set_blocking($fp, 1);
-        stream_set_timeout($fp, $this->timeout);
-        stream_socket_shutdown($fp, STREAM_SHUT_WR);
-
-        $result = stream_get_contents($fp);
-
-        fclose($fp);
 
         if (false === $result) {
             throw new Exception("Connection refused");
