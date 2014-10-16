@@ -120,38 +120,10 @@ class Driver
      */
     public function getStringArray($command, $target = null, $value = null)
     {
-        $string = $this->getString($command, $target, $value);
+        $response = $this->getString($command, $target, $value);
+        $parsedResponse = preg_replace('/\\\./', '', $response);
 
-        $result = array();
-
-        $length  = strlen($string);
-        $current = '';
-        $skip    = false;
-
-        for ($i = 0; $i < $length; $i++) {
-            if (true === $skip) {
-                $skip = false;
-                continue;
-            }
-
-            $char = $string[$i];
-
-            if ($char === '\\') {
-                $skip = true;
-
-                continue;
-            }
-
-            if ($char === ',') {
-                $result[] = $current;
-                $current = '';
-
-                continue;
-            }
-            $current .= $char;
-        }
-
-        return $result;
+        return explode(',', $parsedResponse);
     }
 
     /**
