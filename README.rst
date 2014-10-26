@@ -1,6 +1,16 @@
 PHP Selenium library
 ====================
 
+DEPRECATED
+----------
+
+This library is deprecated, because it relies on Selenium1 protocol, a very old protocol. No support will be provided for this repository. If you want to continue using it, please fork it and maintain it on your own.
+
+You can also consider migrating to **Facebook PHP-WebDriver**: https://github.com/facebook/php-webdriver
+
+Description
+-----------
+
 Selenium is a tool for web test automation. This library is a client of the
 Selenium Server for PHP.
 
